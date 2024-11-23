@@ -1,8 +1,8 @@
 import { defineConfig } from 'vite'
 
 export default defineConfig({
+    root: './front-end',
     server: {
-        port: 3000
-    },
-    include: ['@visactor/vtable'],
+        port: 8831
+    }
 })

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>提交新数据</title>
+</head>
+<body>
+    <div class="container">
+        <h1>提交新数据</h1>
+        <form id="submitForm">
+            <div>
+                <label>ID:</label>
+                <input type="number" name="id" required>
+            </div>
+            <div>
+                <label>姓名:</label>
+                <input type="text" name="name" required>
+            </div>
+            <div>
+                <label>年龄:</label>
+                <input type="number" name="age" required>
+            </div>
+            <div>
+                <label>城市:</label>
+                <input type="text" name="city" required>
+            </div>
+            <button type="submit">提交</button>
+        </form>
+        <a href="/">返回表格</a>
+    </div>
+    <script>
+        // 等待 DOM 加载完成后再执行
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('submitForm');
+            if (!form) {
+                console.error('Form not found!');
+                return;
+            }
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                // 获取表单数据并转换类型
+                const formData = new FormData(e.target);
+                const data = {
+                    id: parseInt(formData.get('id')),
+                    name: formData.get('name'),
+                    age: parseInt(formData.get('age')),
+                    city: formData.get('city')
+                };
+                
+                console.log('Submitting data:', data);
+
+                try {
+                    const response = await fetch('/api/data', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(data)
+                    });
+
+                    console.log('Response status:', response.status);
+
+                    if (response.ok) {
+                        try {
+                            const result = await response.json();
+                            console.log('Success:', result);
+                            if (result.success) {
+                                alert('提交成功！');
+                                window.location.href = '/';
+                            } else {
+                                alert('提交失败：' + (result.message || '未知错误'));
+                            }
+                        } catch (jsonError) {
+                            console.error('JSON parsing error:', jsonError);
+                            alert('提交失败：服务器响应格式错误');
+                        }
+                    } else {
+                        const errorText = await response.text();
+                        console.error('Server error:', errorText);
+                        alert('提交失败：' + errorText);
+                    }
+                } catch (error) {
+                    console.error('Network error:', error);
+                    alert('提交失败：' + error.message);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

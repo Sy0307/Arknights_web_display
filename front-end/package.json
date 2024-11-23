@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@visactor/vtable": "^0.17.10"
+    "@visactor/vtable": "^0.17.1"
   },
   "devDependencies": {
     "vite": "^5.0.0"

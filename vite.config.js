@@ -1,8 +1,14 @@
 import { defineConfig } from 'vite'
 
 export default defineConfig({
-    root: './front-end',
     server: {
-        port: 8831
+        proxy: {
+            '/api': {
+                target: 'http://localhost:8831',
+                changeOrigin: true,
+                secure: false,
+                rewrite: (path) => path.replace(/^\/api/, '/api')
+            }
+        }
     }
 })

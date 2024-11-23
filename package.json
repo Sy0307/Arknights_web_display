@@ -1,0 +1,17 @@
+{
+  "name": "vtable-demo",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@visactor/vtable": "^0.17.10"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0"
+  }
+}
